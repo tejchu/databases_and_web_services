@@ -1,0 +1,54 @@
+**Schema (MySQL v5.7)**
+
+    CREATE TABLE Recipe(
+      	rid int unique,
+    	name char(50),
+      	description char(150),
+      	PRIMARY KEY (rid)
+    );
+    
+    CREATE TABLE Category(
+      	cid int unique,
+    	name char(20),
+      	description char(20),
+      	PRIMARY KEY (cid)
+    );
+    
+    CREATE TABLE Ingredient(
+      	iid int unique,
+    	name char(20),
+      	description char(50),
+      	PRIMARY KEY (iid)
+    );
+    
+    CREATE TABLE Feedback(
+      fid int unique,
+      rating char(150),
+      PRIMARY KEY (fid)
+    );
+    
+    CREATE TABLE Has_recipe(
+    	cid int unique,
+      	rid int,
+      	PRIMARY KEY (cid, rid),
+      	FOREIGN KEY (cid) REFERENCES Category(cid),
+      	FOREIGN KEY (rid) REFERENCES Recipe(rid) 
+    );
+    
+    CREATE TABLE Is_rated(
+      fid int,
+      rid int unique,
+      PRIMARY KEY (fid, rid),
+      FOREIGN KEY (fid) REFERENCES Feedback (fid),
+      FOREIGN KEY (rid) REFERENCES Recipe (rid)
+    );
+      
+    
+    CREATE TABLE Is_Used(
+    	iid int,
+      	rid int unique,
+      	quantity int,
+      	PRIMARY KEY (iid, rid),
+      	FOREIGN KEY (iid) REFERENCES Ingredient(iid),
+      	FOREIGN KEY (rid) REFERENCES Recipe(rid) 
+    );
